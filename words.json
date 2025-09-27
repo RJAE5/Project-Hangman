@@ -1,0 +1,134 @@
+{
+    "Animals":
+    [
+        {
+            "Animal_1" : "Dog",
+            "Animal_2" : "Cat",
+            "Animal_3" : "Cow",
+            "Animal_4" : "Parrot",
+            "Animal_5" : "Turtle",
+            "Animal_6" : "Bunny",
+            "Animal_7" : "Jellyfish",
+            "Animal_8" : "Squirrel",
+            "Animal_9" : "Horse",
+            "Animal_10" : "Koala",
+            "Animal_11" : "Panda",
+            "Animal_12" : "Jiraffe",
+            "Animal_13" : "Spider",
+            "Animal_14" : "Macaw",
+            "Animal_15" : "Camel",
+            "Animal_16" : "Firefly",
+            "Animal_17" : "Pig",
+            "Animal_18" : "Ostrich",
+            "Animal_19" : "Lion",
+            "Animal_20" : "Jaguar"
+        }
+
+    ],    
+    
+    "MSU" : 
+    [
+        {
+            "MSU_1" : "Maverick",
+            "MSU_2" : "Hardin",
+            "MSU_3" : "Bolin",
+            "MSU_4" : "Dillard",
+            "MSU_5" : "Legacy",
+            "MSU_6" : "Killingsworth",
+            "MSU_7" : "Trigg",
+            "MSU_8" : "Leadership",
+            "MSU_9" : "Community",
+            "MSU_10" : "Sunwatcher",
+            "MSU_11" : "Sundance",
+            "MSU_12" : "GoMustangs",
+            "MSU_13" : "Moffett",
+            "MSU_14" : "Maroon",
+            "MSU_15" : "Gold",
+            "MSU_16" : "Centennial",
+            "MSU_17" : "Friendship",
+            "MSU_18" : "McCoy",
+            "MSU_19" : "Brick",
+            "MSU_20" : "Homecoming"
+        }
+    ],
+
+    "Careers" : 
+    [
+        {
+            "Career_1": "Policeman",
+            "Career_2": "Fireman", 
+            "Career_3": "Doctor",
+            "Career_4": "Nurse",
+            "Career_5": "Teacher",
+            "Career_6": "Athlete",
+            "Career_7": "Architect",
+            "Career_8": "Actor",
+            "Career_9": "Programmer",
+            "Career_10": "Politician", 
+            "Career_11": "Judge",
+            "Career_12": "Chef",
+            "Career_13": "Lawyer",
+            "Career_14": "Veterinarian",
+            "Career_15": "Singer",
+            "Career_16": "Engineer",
+            "Career_17": "Scientist",
+            "Career_18": "Journalist",
+            "Career_19": "Accountant",
+            "Career_20": "Magician"
+        }
+    ],
+
+    "Computer_Science" :
+    [
+        {
+            "Computer_Science_1" : "Binary",
+            "Computer_Science_2" : "CPU",
+            "Computer_Science_3" : "Byte",
+            "Computer_Science_4" : "Bit",
+            "Computer_Science_5" : "Software",
+            "Computer_Science_6" : "Hardware",
+            "Computer_Science_7" : "Assembly",
+            "Computer_Science_8" : "Class",
+            "Computer_Science_9" : "Encapsulation",
+            "Computer_Science_10" : "Polymorphism",
+            "Computer_Science_11" : "Inheritance",
+            "Computer_Science_12" : "OS",
+            "Computer_Science_13" : "Bug",
+            "Computer_Science_14" : "Database",
+            "Computer_Science_15" : "Boolean",
+            "Computer_Science_16" : "String",
+            "Computer_Science_17" : "Algorithm",
+            "Computer_Science_18" : "Java",
+            "Computer_Science_19" : "Python",
+            "Computer_Science_20" : "Graphics"
+            
+        }
+    ],
+
+    "Sports" :
+    [
+        {
+            "Sports_1" : "Soccer",
+            "Sports_2" : "Football",
+            "Sports_3" : "Basketball",
+            "Sports_4" : "Tennis",
+            "Sports_5" : "Golf",
+            "Sports_6" : "Paddel",
+            "Sports_7" : "Softball",
+            "Sports_8" : "Volleyball",
+            "Sports_9" : "Baseball",
+            "Sports_10" : "Bowling",
+            "Sports_11" : "Running",
+            "Sports_12" : "Boxing",
+            "Sports_13" : "Gymnastics",
+            "Sports_14" : "Hockey",
+            "Sports_15" : "Skating",
+            "Sports_16" : "Swimming",
+            "Sports_17" : "Taekwondo",
+            "Sports_18" : "Wrestling",
+            "Sports_19" : "ESports",
+            "Sports_20" : "Fencing"
+        }
+    ]
+
+}
