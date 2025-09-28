@@ -1,13 +1,18 @@
 import java.util.Random;
+import java.util.ArrayList;
 
 
 class Game
 {
+    // Member variables
     private int categoryNum;
     private int wordNum;
     private Random rand;
+    private boolean letterInWord;
+    public ArrayList<Integer> currGuessIndicies;
 
 
+    // 2D Array of all words stored in the game
     private static String[][] words = 
     {
         {
@@ -37,24 +42,55 @@ class Game
         }
     };
 
+    // Default constructor
     public Game()
     {
         this.categoryNum = 0;
         this.wordNum = 0;
         this.rand = new Random();
+        this.letterInWord = false;
+        this.currGuessIndicies = new ArrayList<Integer>();
 
     }
 
+    // Abstracted function for simple initialization
     public void init()
     {
         generateCategory();
         generateWord(this.categoryNum);
     }
 
+    public boolean inWord(char guess)
+    {
+        this.currGuessIndicies.clear();
+        this.letterInWord = false;
+
+        for(int i = 0; i < words[this.categoryNum][this.wordNum].length(); i++)
+        {
+            int commonLetter = words[this.categoryNum][this.wordNum].charAt(i);
+            // ASCII Conversion so common letter is uppercase
+            if(commonLetter > 96)
+                commonLetter -= 32;
+
+            // If the guessed character is in the word, keep track of the index where it exists
+            if(guess == commonLetter)
+            {
+                this.currGuessIndicies.add(i);
+                this.letterInWord = true;
+            }
+        }
+
+        // Return bool value
+        return letterInWord;   
+    }
+
+    // Random category number from 0-4
     private void generateCategory()
     {
         this.categoryNum = this.rand.nextInt(5);
     }
+
+    // Random word index from 0-20
     private void generateWord(int cat)
     {
         this.wordNum = this.rand.nextInt(20);
@@ -63,6 +99,7 @@ class Game
     public String getCategory()
     {
         // This switch statement was adapted from an AI (ChatGPT) generated version
+        // It stores the names of each category respective to their index
         switch (this.categoryNum) 
         {
             case 0:
@@ -80,6 +117,7 @@ class Game
         }
     }
 
+    // Accesses the 2D array at the random indicies returning a string.
     public String getWord()
     {
         return words[this.categoryNum][this.wordNum];
