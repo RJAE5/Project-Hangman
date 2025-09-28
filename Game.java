@@ -10,8 +10,8 @@ class Game
     private Random rand;
     private boolean letterInWord;
     public ArrayList<Integer> currGuessIndicies;
-
-
+    public int badGuesses;
+    
     // 2D Array of all words stored in the game
     private static String[][] words = 
     {
@@ -50,9 +50,11 @@ class Game
         this.rand = new Random();
         this.letterInWord = false;
         this.currGuessIndicies = new ArrayList<Integer>();
+        this.badGuesses = 0; 
 
     }
 
+    
     // Abstracted function for simple initialization
     public void init()
     {
@@ -96,6 +98,19 @@ class Game
         this.wordNum = this.rand.nextInt(20);
     }
 
+    //method to increment the # of bad guesses
+    public void incBadGuesses()
+    {
+        // increase bad guesses by 1
+        this.badGuesses++;
+    }
+
+    //method to get the current # of bad guesses
+    public int getNumBadGuesses()
+    {
+        return this.badGuesses;
+    }
+
     public String getCategory()
     {
         // This switch statement was adapted from an AI (ChatGPT) generated version
@@ -123,4 +138,78 @@ class Game
         return words[this.categoryNum][this.wordNum];
     }
 
+    public boolean isWordComplete(String guess) 
+    {
+        String word = getWord();
+        //converts both words to Uppercase ltters
+        String wordU = word.toUpperCase();
+        String guessU= guess.toUpperCase();
+
+        // Checks if lengths are different, meaning the word is missing or needs more letters
+        if (guessU.length() != wordU.length()) 
+        {
+            return false;
+        }
+
+        for (int i = 0; i < wordU.length(); i++) 
+        {
+            if (guessU.charAt(i) != wordU.charAt(i)) //charAt() is used to access a char in an index
+            {
+                return false; // find the letters that don't match
+            }
+        }
+
+        return true; // all letters matched
+    }
+
+
+//Used ChatGPT to test it out
+//      public static void main(String[] args)
+//     {
+//         Game myGame = new Game();
+//         // String word1 = obj.getWord();
+
+//         // String guess = "Parrot";
+//         // String guess1 = "Dog";
+
+//         // System.out.print(obj.isWordComplete(guess));
+//         // System.out.print(obj.isWordComplete(guess1));
+    
+
+//         //ChatGPT to test 
+//        myGame.init();
+
+//     System.out.println("Category: " + myGame.getCategory());
+//     String word = myGame.getWord();
+//     System.out.println("Word to guess has " + word.length() + " letters.");
+
+//     // Example letters to test
+//     char[] testGuesses = {'A', 'E', 'I', 'O', 'U', 'Z'};
+
+//     for (char guess : testGuesses) {
+//         System.out.println("\nGuessing letter: " + guess);
+
+//         // Check if the letter is in the word
+//         if (myGame.inWord(Character.toUpperCase(guess))) {
+//             System.out.println("Letter is in the word!");
+//         } else {
+//             System.out.println("Letter is NOT in the word.");
+//             myGame.incBadGuesses(); // increment bad guesses only for wrong letters
+//         }
+
+//         System.out.println("Current bad guesses: " + myGame.getNumBadGuesses());
+//     }
+
+//     // Test isWordComplete
+//     System.out.println("\nTesting isWordComplete with correct guess: " + word);
+//     System.out.println("Result: " + myGame.isWordComplete(word));
+
+//     System.out.println("Testing isWordComplete with wrong guess: WRONGWORD");
+//     System.out.println("Result: " + myGame.isWordComplete("WRONGWORD"));
+//     }
 }
+
+
+    
+
+
