@@ -2,6 +2,7 @@
 
 ## Authored by Rykir Evans & Victoria Heredia
 ## CMPS 4143 Java Program 2
+> This README is formatted in Markdown
 
 ### Instructions
 
