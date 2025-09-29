@@ -1,3 +1,33 @@
+/*
+ * Button Class
+ *
+ * Description:
+ *      This class contains methods to construct and
+ *      utilize different buttons throughout the game
+ *      depending on the game state
+ *      
+ *
+ * Public Methods:
+ *            - Button()
+ *  void      - drawButton(sf::RenderWindow& window)
+ *  void      - setRolling()
+ *  void      - setInstruction()
+ *  void      - setReady()
+ *  void      - setGameOver()
+ *  bool      - isButtonClicked() 
+ *  
+ *
+ * Private Methods:
+ *
+ * 
+ * Usage:
+ *
+ *       - This class is used to create an instance of a button
+ *         for which the user can click to initiate a rool of
+ *         the die. The state of the button will vary depending
+ *         on what the state of the die is.
+ */
+
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -11,14 +41,17 @@ class Game
     private boolean letterInWord;
     public ArrayList<Integer> currGuessIndicies;
     public int badGuesses;
+    public boolean isRoundOver;
+    public boolean instrShown;
     
+
     // 2D Array of all words stored in the game
     private static String[][] words = 
     {
         {
             // Animals
             "Dog", "Cat", "Cow", "Parrot", "Turtle", "Bunny", "Jellyfish", "Squirrel", "Horse", "Koala",
-            "Panda", "Jiraffe", "Spider", "Macaw", "Camel", "Firefly", "Pig", "Ostrich", "Lion", "Jaguar"
+            "Panda", "Giraffe", "Spider", "Macaw", "Camel", "Firefly", "Pig", "Ostrich", "Lion", "Jaguar"
         },
         {
             // MSU
@@ -42,6 +75,19 @@ class Game
         }
     };
 
+    /*
+    * Public : Button
+    *
+    * Description:
+    *      Default constructor for button, used to initialize
+    *      button parameters and load the font.
+    *
+    * Params:
+    *     None
+    *
+    * Returns:
+    *     None
+    */
     // Default constructor
     public Game()
     {
@@ -51,13 +97,31 @@ class Game
         this.letterInWord = false;
         this.currGuessIndicies = new ArrayList<Integer>();
         this.badGuesses = 0; 
+        this.isRoundOver = false;
+        this.instrShown = true;
 
     }
 
     
+
+    /*
+    * Public : drawButton
+    *
+    * Description:
+    *      Draws all of the elemnts of the button
+    *      in order to resembl an actual button.
+    *
+    * Params:
+    *     sf::RenderWindow& - The window to display to
+    *
+    * Returns:
+    *     None
+    */
     // Abstracted function for simple initialization
     public void init()
     {
+        this.letterInWord = false;
+        this.badGuesses = 0;
         generateCategory();
         generateWord(this.categoryNum);
     }
@@ -141,19 +205,18 @@ class Game
     public boolean isWordComplete(String guess) 
     {
         String word = getWord();
-        //converts both words to Uppercase ltters
+        //converts both words to Uppercase letters
         String wordU = word.toUpperCase();
-        String guessU= guess.toUpperCase();
 
         // Checks if lengths are different, meaning the word is missing or needs more letters
-        if (guessU.length() != wordU.length()) 
+        if (guess.length() != wordU.length()) 
         {
             return false;
         }
 
         for (int i = 0; i < wordU.length(); i++) 
         {
-            if (guessU.charAt(i) != wordU.charAt(i)) //charAt() is used to access a char in an index
+            if (guess.charAt(i) != wordU.charAt(i)) //charAt() is used to access a char in an index
             {
                 return false; // find the letters that don't match
             }
