@@ -1,30 +1,31 @@
+/*
+* Used_Letters Class
+*
+* Description:
+*      This class manages the letters that have been guessed
+*      in the Hangman game. It tracks used letters, prevents
+*      duplicates, and allows checking and clearing of stored letters.
+*
+* Public Methods:
+*            - Used_Letters()
+*  void      - addLetter(char letter)
+*  boolean   - isUsed(char letter)
+*  String    - returnLetters()
+*  void      - clear()
+*
+* Private Methods:
+*      None
+*
+* Usage:
+*
+*       - Create an instance of Used_Letters to track letters guessed
+*         by a player. Use addLetter() to add a guessed letter, isUsed()
+*         to check if a letter has already been guessed, returnLetters()
+*         to get a string of all guessed letters, and clear() to reset.
+*/
+
 import java.util.ArrayList;
 
-/*
- * Used_Letters Class
- *
- * Description:
- *      This class manages the letters that have been guessed
- *      in the Hangman game. It tracks used letters, prevents
- *      duplicates, and allows checking and clearing of stored letters.
- *
- * Public Methods:
- *            - Used_Letters()
- *  void      - addLetter(char letter)
- *  boolean   - isUsed(char letter)
- *  String    - returnLetters()
- *  void      - clear()
- *
- * Private Methods:
- *      None
- *
- * Usage:
- *
- *       - Create an instance of Used_Letters to track letters guessed
- *         by a player. Use addLetter() to add a guessed letter, isUsed()
- *         to check if a letter has already been guessed, returnLetters()
- *         to get a string of all guessed letters, and clear() to reset.
- */
 class Used_Letters
 {
     private ArrayList<Character> usedL;
