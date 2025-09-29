@@ -1,28 +1,30 @@
 /*****************************************************************************\
 *
-*  Author:           Rykir Evans
-*  Email:            rjevans0408@my.msutexas.edu | rykirjoe@yahoo.com
-*  Title:            Quadratic Formula - Java Introduction
+*  Author:           Rykir Evans and Victoria Heredia
+*  Email:            rjevans0408@my.msutexas.edu | vdheredia1128@my.msutexas.edu
+*  Title:            Program 2 - Hangman Game
 *  Course:           CMPS 4143 Java and Python
 *  Professor:        Dr. Tina Johnson
 *  Semester:         Fall 2025
 *
 *  Description:
-*         This program uses input from the user regarding the coefficients
-*         of a degree 2 polynomial and uses the quadratic formula to
-*         calculate the roots of said polynomial. There are handlers for the
-*         cases of equal and imaginary roots as well as valid real roots.
+*         This class contains the main execution for the Hangman game
+*         GUI using Java Swing. It initializes the game state, manages
+*         user input for letter guesses, updates the game display, and
+*         handles the end-of-round logic.
 *         
+*  Public Methods:
+*            - main(String[] args)
+*  void      - createWordStrings(String gameWord, StringBuilder wordSpaces, StringBuilder guessedWord)
+*
+*  Private Methods:
+*      None
+*
 *  Usage:
-*         To use this program, use some standard Java compiler and run the
-*         executable. You will be prompted to enter the coefficients for
-*         a degree 2 polynomial, first with A, then B, followed by C. This
-*         represents the standard formula Ax^2 + Bx + C. If the coefficients
-*         are valid, the program will output the roots, or declare that they
-*         are imaginary. You may enter 0 for all prompts if you wish to exit.
-*         
-*  Files: 
-*         Main.java
+*         Compile and run this class using a standard Java compiler.
+*         The GUI will open, displaying the game category, placeholder
+*         spaces for the word, and buttons for hints, instructions, and
+*         starting a new game.
 \******************************************************************************/
 
 import javax.swing.*;
@@ -31,6 +33,23 @@ import java.awt.event.*;
 
 public class Main
 {
+
+/*
+    * Public : createWordStrings
+    *
+    * Description:
+    *      Initializes two StringBuilder objects to represent the hidden
+    *      word and the displayed word spaces for the Hangman GUI. Inserts
+    *      underscores for each letter in the word and spaces for readability.
+    *
+    * Params:
+    *     String gameWord - The word to be guessed
+    *     StringBuilder wordSpaces - StringBuilder to store underscores for display
+    *     StringBuilder guessedWord - StringBuilder to store the guessed letters
+    *
+    * Returns:
+    *     None
+*/
     public static void createWordStrings(String gameWord, StringBuilder wordSpaces, StringBuilder guessedWord)
     {
         for(int i = 0; i < gameWord.length() * 2; i++)
@@ -46,6 +65,21 @@ public class Main
         }
     }
 
+/*
+    * Public : main
+    *
+    * Description:
+    *      Entry point of the Hangman game. Initializes the GUI components,
+    *      the game state, and the event listeners for keyboard input and
+    *      buttons (Hint, Toggle Instructions, New Game). Updates the game
+    *      display in real-time based on user input and tracks used letters.
+    *
+    * Params:
+    *     String[] args - Command line arguments
+    *
+    * Returns:
+    *     None
+*/
     public static void main(String[] args)
     {
         ////////////////////////////
@@ -57,7 +91,7 @@ public class Main
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Font buttonFont = new Font("Arial", Font.BOLD, 24);
-        Font instrFont = new Font("Arial", Font.PLAIN, 20);
+        Font instrFont = new Font("Arial", Font.PLAIN, 18);
         Font bigFont = new Font("Arial", Font.BOLD, 48);
 
         Dimension wordPanDim = new Dimension(1200, 200);
@@ -99,10 +133,11 @@ public class Main
         /// Screen Elements ///
         ///////////////////////
         
-        String instrText = "Welcome to Project Hangman, created by Rykir Evans and Victoria Heredia. " +
+        String instrText = "Welcome to Project Hangman!\n" + "\n" +
                            "The goal of this game is to guess a word based on the category and number" +
                            " of possible spaces, one letter at a time. You may request a hint which "  +
-                           "will reveal a letter, change cateory, or start a new game.";
+                           "will reveal a letter. Click the right button to start a new game." + "\n" +
+                           "\nCreated by Rykir Evans and Victoria Heredia.";
         // General instructions text
         JTextArea instructions = new JTextArea
         (instrText);
@@ -369,25 +404,6 @@ public class Main
 
         frame.setFocusable(true);
         frame.requestFocusInWindow();
-
-
-        
-        /////////////////
-        /// Game Loop ///
-        /////////////////
-        // Timer timer = new Timer(16, 
-        // new ActionListener() 
-        //     {
-        //         public void actionPerformed(ActionEvent e) 
-        //         {
-        //             // update();         // Step 1: update game state
-                      
-        //         }
-        //     });
-
-        // timer.start(); // Start the loop
-
-
 
     }
 }
