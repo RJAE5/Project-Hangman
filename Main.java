@@ -2,7 +2,7 @@
 *
 *  Author:           Rykir Evans and Victoria Heredia
 *  Email:            rjevans0408@my.msutexas.edu | vdheredia1128@my.msutexas.edu
-*  Title:            Program 2 - Hangman Game
+*  Title:            Program 2 - Project Hangman
 *  Course:           CMPS 4143 Java and Python
 *  Professor:        Dr. Tina Johnson
 *  Semester:         Fall 2025
@@ -14,7 +14,7 @@
 *         handles the end-of-round logic.
 *         
 *  Public Methods:
-*            - main(String[] args)
+*  void      - main(String[] args)
 *  void      - createWordStrings(String gameWord, StringBuilder wordSpaces, StringBuilder guessedWord)
 *
 *  Private Methods:
@@ -57,7 +57,12 @@ public class Main
             // Aesthetic for label
             if(i % 2 == 0)
             {
+                // Display StringBuilder gets an underscore followed by a space
+                // Ex: _ _ _ _ _ 
                 wordSpaces.append('_');
+
+                // Since the length is doubled, a space to the main guessedWord tracker
+                // is added only every other time.
                 guessedWord.append(' ');
             }
             else
@@ -139,22 +144,18 @@ public class Main
                            "will reveal a letter. Click the right button to start a new game." + "\n" +
                            "\nCreated by Rykir Evans and Victoria Heredia.";
         // General instructions text
-        JTextArea instructions = new JTextArea
-        (instrText);
+        JTextArea instructions = new JTextArea(instrText);
 
         // Initial variables for image, to be later overrode
         ImageIcon initHangStand = new ImageIcon("./Media/pixil-frame-0.png");
         Image initImg = initHangStand.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
         initHangStand = new ImageIcon(initImg);
         
+        // Image holder
         JLabel imgLabel = new JLabel(initHangStand);
         imgLabel.setIcon(initHangStand);
         
-        
-        //Test
-        // usedLetters.addLetter('a');
-        // Section for the used letters
-        // MIGHT NEED TO CONVERT TO JTextArea
+        // Section displaying used letters
         JTextArea usedLettTextArea = new JTextArea();
         usedLettTextArea.setFont(buttonFont);
         usedLettTextArea.setLineWrap(true);
@@ -181,15 +182,13 @@ public class Main
         topPanel.add(imgLabel, BorderLayout.CENTER);
         topPanel.add(usedLettTextArea, BorderLayout.EAST);
 
-        // Word placeholder label
+        // Placeholder for the main word label
         JLabel wordLabel = new JLabel("");
         wordLabel.setFont(bigFont);
         wordLabel.setHorizontalAlignment(SwingConstants.CENTER);
         wordPanel.setPreferredSize(wordPanDim);
 
-        
-
-        // Category display label
+        // Category/Misc Instructions display label
         JLabel catLabel = new JLabel("");
         catLabel.setFont(buttonFont);
         catLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -213,18 +212,20 @@ public class Main
         StringBuilder wordSpaces = new StringBuilder("");
         StringBuilder guessedWord = new StringBuilder("");
 
+        // Create String and StringBuilder objects keeping track of the word at hand, 
+        // how many spaces it will display, and what has been guessed so far
         createWordStrings(gameWord, wordSpaces, guessedWord);
 
-        // Word Panel:
+        // Main word display label receiving text and being added to the display panel
         wordLabel.setText(wordSpaces.toString());
         wordPanel.add(wordLabel, BorderLayout.CENTER);
 
-        // Category Panel:
+        // Category display label receiving text and being added to the display panel
         catLabel.setText("Category: " + game.getCategory());
         catPanel.add(catLabel, BorderLayout.NORTH);
         
 
-        // Bottom section
+        // Bottom div assembly
         bottomPanel.add(hintButton);
         bottomPanel.add(showCredsButton);
         bottomPanel.add(newGameButton);
@@ -241,167 +242,183 @@ public class Main
         /// Main Game Logic ///
         ///////////////////////
 
-        // if(!roundOver)
-        // {
-            frame.addKeyListener(new KeyAdapter() 
-            {
-                // Listening for key presses
-                public void keyPressed(KeyEvent e) 
-                {
-                    if(!game.isRoundOver)
-                    {
-                        // ASCII conversion to work only with uppercase letters
-                        char key = e.getKeyChar();
-                        if(key > 96)
-                        {key -= 32;}
-
-                        // Check that key pressed is a letter, and if it's already used
-                        if(Character.isLetter(key) && !usedLetters.isUsed(key))
-                        {
-                            // Add to usedLetters ArrayList
-                            usedLetters.addLetter(key);
-                            usedLettTextArea.setText(usedLetters.returnLetters());
-
-                            // If the guess was correct
-                            if(game.inWord(key))
-                            {
-                                // Replace the displayed label with correct spaces
-                                for(int i = 0; i < game.currGuessIndicies.size(); i++)
-                                {
-                                    // Set the stringBuilder with underscores with the guessed character
-                                    wordSpaces.setCharAt(game.currGuessIndicies.get(i) * 2, key);    
-
-                                    /////////////////
-                                    // THIS WILL BREAK THE VERIFICATION  METHOD THAT VICKY WROTE because it's making a string all capitals
-                                    ////////////////
-                                    guessedWord.setCharAt(game.currGuessIndicies.get(i), key);
-                                    System.out.println(guessedWord.toString());
-                                    System.out.println("Is word complete? " + game.isWordComplete(guessedWord.toString()));
-
-                                    if(game.isWordComplete(guessedWord.toString()))
-                                    {
-                                        catLabel.setText("ROUND COMPLETE");
-                                        catLabel.setForeground(Color.GREEN);;
-                                        game.isRoundOver = true;
-
-                                    }
-                                }
-
-                                // Change displayed label
-                                wordLabel.setText(wordSpaces.toString());
-                            }
-                            else // The guess is not in the word
-                            {
-                                game.incBadGuesses();
-                                
-                                // Image display
-                                ImageIcon hangStand = new ImageIcon("./Media/pixil-frame-" + game.getNumBadGuesses() + ".png");
-                                Image img = hangStand.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
-                                hangStand = new ImageIcon(img);
-                                imgLabel.setIcon(hangStand);
-
-                                if(game.getNumBadGuesses() >= 14)
-                                {
-                                    game.isRoundOver = true;
-                                    catLabel.setText("ROUND FAILED");
-                                    catLabel.setForeground(Color.RED);;
-                                }
-                            }
-                        }
-                        
-                    }
-                    else
-                    {
-                        catLabel.setText("Press 'New Game' to begin again");
-                        catLabel.setForeground(Color.BLACK);
-                    }
-                }
-            });
-
-            hintButton.addActionListener(e -> 
+        // Key Press Listener
+        frame.addKeyListener(new KeyAdapter() 
+        {
+            // Main method listening for key presses
+            public void keyPressed(KeyEvent e) 
             {
                 if(!game.isRoundOver)
                 {
-                    String currWord = game.getWord().toUpperCase();
-                    for(int i = 0; i < currWord.length(); i++)
-                    {
-                        if(currWord.charAt(i) != guessedWord.charAt(i))
-                        {
+                    // ASCII conversion to work only with uppercase letters
+                    char key = e.getKeyChar();
+                    if(key > 96)
+                    {key -= 32;}
 
-                            guessedWord.setCharAt(i, currWord.charAt(i));
-                            wordSpaces.setCharAt(i * 2, currWord.charAt(i));
-                            usedLetters.addLetter(currWord.charAt(i));
-                            
-                            for(int j = i + 1; j < currWord.length(); j++)
+                    // Check that key pressed is a letter, and if it's already used
+                    if(Character.isLetter(key) && !usedLetters.isUsed(key))
+                    {
+                        // Add to usedLetters ArrayList
+                        usedLetters.addLetter(key);
+                        usedLettTextArea.setText(usedLetters.returnLetters());
+
+                        // If the guess was correct
+                        if(game.inWord(key))
+                        {
+                            // Replace the displayed label with correct spaces
+                            for(int i = 0; i < game.currGuessIndicies.size(); i++)
                             {
-                                if(currWord.charAt(j) == currWord.charAt(i))
+                                // Set the stringBuilders with underscores with the guessed character
+                                wordSpaces.setCharAt(game.currGuessIndicies.get(i) * 2, key);    
+
+                                // Set the stringbuilder keeping track of the guessed word so far
+                                guessedWord.setCharAt(game.currGuessIndicies.get(i), key);
+
+                                // Round completion steps
+                                if(game.isWordComplete(guessedWord.toString()))
                                 {
-                                    guessedWord.setCharAt(j, currWord.charAt(i));
-                                    wordSpaces.setCharAt(j * 2, currWord.charAt(i));
-                                    
+                                    catLabel.setText("ROUND COMPLETE");
+                                    catLabel.setForeground(Color.GREEN);;
+                                    game.isRoundOver = true;
+
                                 }
                             }
 
-                            usedLettTextArea.setText(usedLetters.returnLetters());
+                            // Change displayed label
                             wordLabel.setText(wordSpaces.toString());
-                            frame.requestFocusInWindow();
+                        }
+                        else // The guess is not in the word
+                        {
+                            // Increment Bad Guess counter
+                            game.incBadGuesses(); 
+                            
+                            // Image display contingent on number of bad guesses
+                            ImageIcon hangStand = new ImageIcon("./Media/pixil-frame-" + game.getNumBadGuesses() + ".png");
+                            Image img = hangStand.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+                            hangStand = new ImageIcon(img);
+                            imgLabel.setIcon(hangStand);
 
-                            if(game.isWordComplete(guessedWord.toString()))
+                            // Game over conditions
+                            if(game.getNumBadGuesses() >= 14)
                             {
-                                catLabel.setText("ROUND COMPLETE");
-                                catLabel.setForeground(Color.GREEN);;
                                 game.isRoundOver = true;
-
+                                catLabel.setText("ROUND FAILED");
+                                catLabel.setForeground(Color.RED);;
                             }
-                            break;
                         }
                     }
+                    
                 }
-
-            });
-
-            showCredsButton.addActionListener(e -> 
-            {
-                if(game.instrShown)
+                else // Total number of bad guesses exceeded, prompt user to begin a new game
                 {
-                    instructions.setText("");
-                    game.instrShown = !game.instrShown;
+                    catLabel.setText("Press 'New Game' to begin again");
+                    catLabel.setForeground(Color.BLACK);
                 }
-                else
-                {
-                    instructions.setText(instrText);
-                    game.instrShown = !game.instrShown;
-                }
-                frame.requestFocusInWindow();
-                
-            });
+            }
+        });
 
-            newGameButton.addActionListener(e ->
+        // Hint Button Action
+        hintButton.addActionListener(e -> 
+        {
+            if(!game.isRoundOver)
             {
-                game.init();
-                game.isRoundOver = false;
-                
-                wordSpaces.setLength(0);
-                guessedWord.setLength(0);
-                usedLetters.clear();
-                createWordStrings(game.getWord(), wordSpaces, guessedWord);
+                // Get a common word for comparison
+                String currWord = game.getWord().toUpperCase();
 
-                wordLabel.setText(wordSpaces.toString());
-                catLabel.setForeground(Color.BLACK);
-                catLabel.setText("Category: " + game.getCategory());
+                // Loop for finding indicies of what letters have been revealed
+                for(int i = 0; i < currWord.length(); i++)
+                {
+                    // Left-most letter that has not been guessed
+                    if(currWord.charAt(i) != guessedWord.charAt(i))
+                    {
+                        // Update all tracking elements to include the revealed letter
+                        guessedWord.setCharAt(i, currWord.charAt(i));
+                        wordSpaces.setCharAt(i * 2, currWord.charAt(i));
+                        usedLetters.addLetter(currWord.charAt(i));
+                        
+                        // For repeated letters, the rest are revealed
+                        for(int j = i + 1; j < currWord.length(); j++)
+                        {
+                            if(currWord.charAt(j) == currWord.charAt(i))
+                            {
+                                // Update tracking elements
+                                guessedWord.setCharAt(j, currWord.charAt(i));
+                                wordSpaces.setCharAt(j * 2, currWord.charAt(i));
+                                
+                            }
+                        }
 
-                usedLettTextArea.setText("");
-                frame.requestFocusInWindow(); // Realized this line was necessary  thanks to AI (ChatGPT) because the frame would lose focus once the button is clicked
+                        // Update display elements
+                        usedLettTextArea.setText(usedLetters.returnLetters());
+                        wordLabel.setText(wordSpaces.toString());
+                        frame.requestFocusInWindow();
 
-                ImageIcon hangStand = new ImageIcon("./Media/pixil-frame-" + game.getNumBadGuesses() + ".png");
-                Image img = hangStand.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
-                hangStand = new ImageIcon(img);
-                imgLabel.setIcon(hangStand);
+                        // If the revealed letter completes the game, enter roundOver conditions.
+                        if(game.isWordComplete(guessedWord.toString()))
+                        {
+                            catLabel.setText("ROUND COMPLETE");
+                            catLabel.setForeground(Color.GREEN);;
+                            game.isRoundOver = true;
 
-            });
+                        }
+                        break; // Break outer for-loop
+                    }
+                }
+            }
+
+        });
+
+        // Toggle instructions button action
+        showCredsButton.addActionListener(e -> 
+        {
+            // If the instructions are already shown, delete them
+            if(game.instrShown)
+            {
+                instructions.setText("");
+                game.instrShown = !game.instrShown;
+            }
+            else // Show the instructions
+            {
+                instructions.setText(instrText);
+                game.instrShown = !game.instrShown;
+            }
+            frame.requestFocusInWindow();
+            
+        });
+
+        // New Game Action
+        newGameButton.addActionListener(e ->
+        {
+            // Obtain a new word
+            game.init();
+            game.isRoundOver = false;
+            
+            // Reset tracking elements
+            wordSpaces.setLength(0);
+            guessedWord.setLength(0);
+            usedLetters.clear();
+
+            // Setup tracking string and StringBuilders
+            createWordStrings(game.getWord(), wordSpaces, guessedWord);
+
+
+            // Set Display Elements
+            wordLabel.setText(wordSpaces.toString());
+            catLabel.setForeground(Color.BLACK);
+            catLabel.setText("Category: " + game.getCategory());
+            usedLettTextArea.setText("");
+            frame.requestFocusInWindow(); // Realized this line was necessary  thanks to AI (ChatGPT) because the frame would lose focus once the button is clicked
+
+            // Reset image
+            ImageIcon hangStand = new ImageIcon("./Media/pixil-frame-" + game.getNumBadGuesses() + ".png");
+            Image img = hangStand.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+            hangStand = new ImageIcon(img);
+            imgLabel.setIcon(hangStand);
+
+        });
         
+        // Main display commands  
         frame.setVisible(true);
-
         frame.setFocusable(true);
         frame.requestFocusInWindow();
 
