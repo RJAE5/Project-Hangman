@@ -63,6 +63,12 @@ class Used_Letters
 
         return letters;
     }
+
+    public void clear()
+    {
+        this.usedL.clear();
+    }
+    
     public static void main(String[] args)
     {
         Used_Letters whatever = new Used_Letters();
