@@ -25,6 +25,11 @@
 *         The GUI will open, displaying the game category, placeholder
 *         spaces for the word, and buttons for hints, instructions, and
 *         starting a new game.
+* 
+*  Files:
+*         Main.java
+*         Game.java         - Class for tracking game elements
+*         Used_Letters.java - Class for tracking used letters
 \******************************************************************************/
 
 import javax.swing.*;
